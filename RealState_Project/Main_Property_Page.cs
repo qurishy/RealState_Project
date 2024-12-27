@@ -41,6 +41,7 @@ namespace RealState_Project
 
                 button6.Visible = true;
                 label2.Visible = true;
+                button7.Visible = true;
 
                 logedIN = true;
 
@@ -78,6 +79,7 @@ namespace RealState_Project
 
             button6.Visible = false;
             label2.Visible = false;
+            button7.Visible = false;
 
 
             DataTable result = _conn.GetProperty();
@@ -172,7 +174,8 @@ namespace RealState_Project
 
             if (logedIN==true)
             {
-                Order_Property order  = new Order_Property(_user.user_id, propertyId);
+                Order_Property order  = new Order_Property(_user, propertyId);
+
                 order.Show();
                 this.Close();
               
@@ -286,6 +289,15 @@ namespace RealState_Project
         private void button6_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        //when clicked the button will open the CRUD page and you have to login first
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Propperty_CRUD property_CRUD = new Propperty_CRUD(_user);
+            property_CRUD.Show();
+            this.Hide();
         }
     }
 }

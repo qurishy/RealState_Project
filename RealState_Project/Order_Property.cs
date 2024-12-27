@@ -1,4 +1,5 @@
 ﻿using RealState_Project.Data_Access_Point;
+using RealState_Project.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,15 +15,23 @@ namespace RealState_Project
     public partial class Order_Property : Form
     {
         private Property_Conn _conn;
-        private int _user_id, _property_id;
+        private int  _property_id;
+        User_Info _user;
         
-        public Order_Property(int user_id, int property_id)
+        public Order_Property(User_Info user, int property_id)
         {
             InitializeComponent();
             _conn = new Property_Conn();
-            _user_id = user_id;
+            _user= user;
             _property_id = property_id;
             propartyblocks();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Main_Property_Page main_Property_Page = new Main_Property_Page(_user);
+            main_Property_Page.Show();
+            this.Close();
         }
 
         private void propartyblocks()

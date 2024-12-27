@@ -162,6 +162,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent_page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agent_page.Designer.cs">
+      <DependentUpon>Agent_page.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data_Access_Point\Agent_Conn.cs" />
     <Compile Include="Data_Access_Point\Client_Conn.cs" />
     <Compile Include="Data_Access_Point\Property_Conn.cs" />
@@ -201,6 +207,9 @@
     <Compile Include="Register_Page.Designer.cs">
       <DependentUpon>Register_Page.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Agent_page.resx">
+      <DependentUpon>Agent_page.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login_Page.resx">
       <DependentUpon>Login_Page.cs</DependentUpon>
     </EmbeddedResource>

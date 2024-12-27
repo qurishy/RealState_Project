@@ -14,7 +14,6 @@ namespace RealState_Project
 {
     public partial class Login_Page : Form
     {
-       
 
         Client_Conn _conn;
         string _email;
@@ -28,18 +27,16 @@ namespace RealState_Project
            _info = new User_Info();
         }
 
-    
-
         private void button1_Click(object sender, EventArgs e)
         {
             _email = GetEmailFromTextBox();
             _password = GetPasswordFromTextBox();
 
-            
 
             if (!string.IsNullOrWhiteSpace(_email) && !string.IsNullOrWhiteSpace(_password))
             {
                 DataTable dt = _conn.CheckLogin(_email, _password);
+
                 if (dt.GetType() == typeof(DataTable) && dt != null && dt.Rows.Count > 0)
                 {
                     // Process the result
@@ -48,22 +45,40 @@ namespace RealState_Project
                     _info.email = Convert.ToString(dt.Rows[0]["email"]);
                     _info.role_id = Convert.ToInt32(dt.Rows[0]["role_id"]);
                     _info.password_hash = Convert.ToString(dt.Rows[0]["password_hash"]);
-                    
-                    
-                    Main_Property_Page main_Property_Page = new Main_Property_Page(_info);
-               
-                    main_Property_Page.Show();
-                    this.Close();
 
+                    if (_info.role_id==2)
+                    {
+                        Main_Property_Page main_Property_Page = new Main_Property_Page(_info);
                    
-      
-                   
+                        main_Property_Page.Show();
+                  
+                        this.Close();
+
+                    }
+                    else if (_info.role_id==3)
+                    {
+                        Propperty_CRUD propperty_CRUD = new Propperty_CRUD(_info);
+                        propperty_CRUD.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("Invalid User");
+
+                    }
+                    
+    
+ 
 
                 }
                 else
                 {
-                    // Handle no result or error
+                    // Handle no result or error    
+                   
                 }
+
+
             }
             else
             {

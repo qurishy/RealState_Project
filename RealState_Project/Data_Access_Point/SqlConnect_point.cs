@@ -207,11 +207,12 @@ namespace RealState_Project.Data_Access_Point
 
             return rowsAffected;
         }
+        
 
         // Method to call stored procedures
-        public object CallStoredProcedure(string procedureName, SqlParameter[] parameters)
+        public void CallStoredProcedure(string procedureName, SqlParameter[] parameters)
         {
-            object result = null;
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -229,6 +230,7 @@ namespace RealState_Project.Data_Access_Point
                         {
                             command.Parameters.Add(parameter);
                         }
+
                         command.ExecuteNonQuery(); // Use ExecuteNonQuery as the SP does not return a result set
                     }
                 }
@@ -252,7 +254,7 @@ namespace RealState_Project.Data_Access_Point
             {
                 MessageBox.Show($"Error calling stored procedure: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return result;
+           
         }
 
 
