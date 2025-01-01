@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,9 +104,27 @@ namespace RealState_Project
                
 
                 flowLayoutPanel1.AutoScroll = true;
+            string imagePath = "C:\\Users\\erhad\\OneDrive\\Desktop\\Arshad_UNI_Matrials\\Semister_5\\Database Management\\c2\\RealState_Project\\RealState_Project\\Model\\villa.jpg";
+            try
+            {
+                pictureBox.Image = Image.FromFile(imagePath);
+            }
+            catch (FileNotFoundException ex)
+            {
+                // Handle the case where the image file isn't found.
+                MessageBox.Show($"Error loading image: {ex.Message}");
+                pictureBox.Image = null; // Or set an error image if you want.
+                return; // Or continue if you want to ignore the error
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred loading the image: {ex.Message}");
+                pictureBox.Image = null;
+                return; // Or handle the error
+            }
 
 
-                panel.Controls.Add(pictureBox);
+            panel.Controls.Add(pictureBox);
                 panel.Controls.Add(labeltype);
                 panel.Controls.Add(labelprice);
                 panel.Controls.Add(labelstatus);
