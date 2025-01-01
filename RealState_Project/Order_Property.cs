@@ -14,6 +14,8 @@ namespace RealState_Project
 {
     public partial class Order_Property : Form
     {
+
+        private Client_Conn _Client_Conn;
         private Property_Conn _conn;
         private int  _property_id;
         User_Info _user;
@@ -22,9 +24,13 @@ namespace RealState_Project
         {
             InitializeComponent();
             _conn = new Property_Conn();
+            _Client_Conn = new Client_Conn();
             _user= user;
             _property_id = property_id;
             propartyblocks();
+            comboBox1.Items.Add("Sale");
+            comboBox1.Items.Add("Rent");
+            label2.Text = _user.username.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -43,7 +49,7 @@ namespace RealState_Project
             
                 Panel panel = new Panel
                 {
-                    Size = new Size(170, 280),
+                    Size = new Size(550, 230),
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(10)
                 };
@@ -108,6 +114,51 @@ namespace RealState_Project
 
                 flowLayoutPanel1.Controls.Add(panel);
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataRow value = null;
+            string type;
+            int owner_id;
+            decimal price;
+            
+            if(comboBox1 != null)
+            {
+                type = comboBox1.SelectedItem.ToString();
+
+
+                value = _conn.GetSingleRow(_property_id);
+                if (value != null)
+                {
+                    price = decimal.Parse(value["list_price"].ToString()); 
+                    owner_id = int.Parse(value["Owner_id"].ToString());
+                    
+                   int rowsAffected = _Client_Conn.MakeOrder( _property_id, _user.user_id, price, type,  owner_id);
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Order placed successfully.");
+                        Main_Property_Page main_Property_Page = new Main_Property_Page(_user);
+                        main_Property_Page.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Order placement failed.");
+                    }
+
+
+                }
+                else
+                {
+                    MessageBox.Show("property not found");
+                }
+                
+
+                
+            }else
+            { MessageBox.Show("please choose transaction type"); }
         }
     }
 }

@@ -26,15 +26,15 @@ namespace RealState_Project
 
             _user = user;
 
+           
             comboBox2.Items.Add("Available");
-            comboBox2.Items.Add("Sold");
-            comboBox2.Items.Add("Rented");
+            
 
             comboBox1.Items.Add("Commercial");
             comboBox1.Items.Add("Land");
             comboBox1.Items.Add("Residential");
 
-            DataTable result = _conn.GetProperty_Client(5);
+            DataTable result = _conn.GetProperty_Client(_user.user_id);
             propartyblocks(result);
 
         
@@ -66,8 +66,8 @@ namespace RealState_Project
                     address = textBox5.Text.Trim();
                     state = textBox7.Text.Trim();
 
-                    // int   owner_id  = int.Parse(_user.user_id.ToString());
-                    int owner_id = 2;
+                    int   owner_id  = int.Parse(_user.user_id.ToString());
+                   
 
                     //we are passing the values to our Propperty_conn to insert propperty in datatable
 
@@ -193,6 +193,7 @@ namespace RealState_Project
             }
         }
 
+        //get us back to main page
         private void button2_Click(object sender, EventArgs e)
         {
             Main_Property_Page main_page = new Main_Property_Page(_user);

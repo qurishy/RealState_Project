@@ -57,8 +57,8 @@ namespace RealState_Project
                     }
                     else if (_info.role_id==3)
                     {
-                        Propperty_CRUD propperty_CRUD = new Propperty_CRUD(_info);
-                        propperty_CRUD.Show();
+                        Agent_page agent = new Agent_page(_info);
+                        agent.Show();
                         this.Close();
                     }
                     else

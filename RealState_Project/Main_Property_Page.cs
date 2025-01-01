@@ -80,6 +80,7 @@ namespace RealState_Project
             button6.Visible = false;
             label2.Visible = false;
             button7.Visible = false;
+            logedIN=false;
 
 
             DataTable result = _conn.GetProperty();
@@ -143,7 +144,6 @@ namespace RealState_Project
                     Location = new Point(5, 215),
                     AutoSize = true 
                 };
-
                 Button selectbutton = new Button
                 {
                     Text = "Select",
@@ -152,6 +152,17 @@ namespace RealState_Project
                     Size = new Size(150, 35)
                 };
                 selectbutton.Click += selectbutton_Click;
+
+                if (row["status"].ToString() == "Available")
+                {
+                   selectbutton.Visible = true;
+                }
+                else if (row["status"].ToString() == "Pending")
+                {
+                     selectbutton.Enabled = false;
+                }
+                else
+                    selectbutton.Visible = false;
 
                 flowLayoutPanel1.AutoScroll = true;
 
@@ -288,7 +299,9 @@ namespace RealState_Project
 
         private void button6_Click(object sender, EventArgs e)
         {
-
+            Main_Property_Page logout = new Main_Property_Page();
+            logout.Show();
+            this.Hide();
         }
 
 

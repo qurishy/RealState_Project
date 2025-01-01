@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -197,6 +198,38 @@ namespace RealState_Project.Data_Access_Point
             }
 
         }
+
+
+
+        //It makes an order and upload it in the orderlist table
+        public int MakeOrder(int propertyId, int buyerId, decimal salePrice, string transactionType, int owner_id)
+        {
+            string query = @"INSERT INTO [Project_RealState].[dbo].[OrderList] 
+                    ( property_id, buyer_id, seller_id, sale_price, transaction_type) VALUES 
+                    ( @property_id, @buyer_id, @seller_id, @sale_price, @transaction_type)";
+
+            SqlParameter[] parameters =
+            {
+        
+                new SqlParameter("@property_id", SqlDbType.Int) { Value = propertyId },
+       
+                new SqlParameter("@seller_id", SqlDbType.Int) { Value = owner_id },
+        
+                new SqlParameter("@buyer_id", SqlDbType.Int) { Value = buyerId },
+       
+                new SqlParameter("@sale_price", SqlDbType.Decimal) { Value = salePrice },
+       
+                new SqlParameter("@transaction_type", SqlDbType.VarChar, 50) { Value = transactionType.ToString().Trim() }
+   
+            };
+
+           int rowsAffected = _conn.ExecuteNonQuery(query, parameters);
+
+            return rowsAffected;
+
+        }
+
+
 
     }
 }
